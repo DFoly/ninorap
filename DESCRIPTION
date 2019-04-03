@@ -1,0 +1,20 @@
+Package: ninorap
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Daniel",
+           family = "Foley",
+           role = c("aut", "cre"),
+           email = "dan.foley@dwp.gsi.gov.uk")
+Description: Reproducible Analytical Pipeline for Nino Registrations
+License: What license it uses
+Encoding: UTF-8
+LazyData: true
+Imports:
+    httr (>= 1.4.0),
+    jsonlite (>= 1.6),
+    lubridate (>= 1.7.4),
+    roxygen2 (>= 6.1.1),
+    tidyverse (>= 1.2.1),
+    zoo (>= 1.8-4)
+RoxygenNote: 6.1.1
