@@ -14,7 +14,9 @@ Imports:
     httr (>= 1.4.0),
     jsonlite (>= 1.6),
     lubridate (>= 1.7.4),
+    magrittr,
     roxygen2 (>= 6.1.1),
     tidyverse (>= 1.2.1),
-    zoo (>= 1.8-4)
+    zoo (>= 1.8-4),
+    govstyle
 RoxygenNote: 6.1.1

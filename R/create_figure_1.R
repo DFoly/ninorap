@@ -1,3 +1,4 @@
+#' @title Create Figure 1
 #' @description This function produces Figure 1 from the publication.
 #' Plots total number of Nino Registrations from EU, outside the EU and the total.
 #' Assumes data is of type list by default and data frame is the first element of the list.

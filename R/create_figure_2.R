@@ -60,4 +60,4 @@ create_figure_2 <- function(data, year_to_date) {
 }
 
 
-#create_figure_2(data, year_to_date)
+create_figure_2(data, year_to_date)
