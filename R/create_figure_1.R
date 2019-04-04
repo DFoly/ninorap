@@ -6,6 +6,7 @@
 #' @param year_to_date Last month in quarter: March, June, September, December
 #' @return year to data sums to plot figure 1
 #' @examples
+#' @export
 #' create_figure_1(data)
 
 create_figure_1 <- function(data, year_to_date) {
@@ -21,15 +22,23 @@ create_figure_1 <- function(data, year_to_date) {
   non_eu_latest <- as.data.frame(year_end_data$non_eu[N])
   total_latest <- as.data.frame(year_end_data$Total[N])
 
+  x_len = length(year_end_data$quarter_dates)
+
   g <- ggplot2::ggplot(year_end_data, ggplot2::aes(x = quarter_dates, y =European_Union)) +
            ggplot2::geom_line(ggplot2::aes(group = 1),color = "#2E358B", size = 1) +
            ggplot2::geom_line(ggplot2::aes(y = non_eu, group = 1), color = "#F47738", size = 1) +
            ggplot2::geom_line(ggplot2::aes(y = Total, group = 1),linetype = "dashed",color = "grey", size = 1)
 
+  # check growth rates
+  eu_shift = ifelse(year_end_data$European_Union[N] - year_end_data$European_Union[N-1]>0,1,0)
+  non_eu_shift =  ifelse(year_end_data$non_eu[N] - year_end_data$non_eu[N-1]>0,1,0)
+  total_shift =  ifelse(year_end_data$Total[N] - year_end_data$Total[N-1]>0,1,0)
+
+
   # Adds last data point as text
-  graph <- g + ggplot2::annotate("text", x=17, y = eu_latest[[1]]-eu_min, label=paste0("EU: ",eu_latest," "), color = "#2E358B") +
-           ggplot2::annotate("text", x=16, y = non_eu_latest[[1]]+non_eu_min, label=paste0("Non-EU: ",non_eu_latest," "), color = "#F47738") +
-           ggplot2::annotate("text", x=17, y = total_latest[[1]]-total_min, label=paste0("Total: ",total_latest," "), color = "grey") +
+  graph <- g + ggplot2::annotate("text", x=x_len, y = eu_latest[[1]]+eu_min*(eu_shift), label=paste0("EU: ",eu_latest," "), color = "#2E358B") +
+           ggplot2::annotate("text", x=x_len, y = non_eu_latest[[1]]+non_eu_min*(non_eu_shift), label=paste0("Non-EU: ",non_eu_latest," "), color = "#F47738") +
+           ggplot2::annotate("text", x=x_len, y = total_latest[[1]]+total_min*(total_shift), label=paste0("Total: ",total_latest," "), color = "grey") +
            govstyle::theme_gov(base_size = 12, base_colour = "gray60") + ggplot2::labs(x = "12 months ending", y = 'Registrations in Thousands')
 
   #Fix axis labels
@@ -41,5 +50,5 @@ create_figure_1 <- function(data, year_to_date) {
 }
 
 
-create_figure_1(data, "Dec")
+#pp <- create_figure_1(data, "Dec")
 

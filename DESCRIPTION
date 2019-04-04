@@ -7,16 +7,21 @@ Authors@R:
            role = c("aut", "cre"),
            email = "dan.foley@dwp.gsi.gov.uk")
 Description: Reproducible Analytical Pipeline for Nino Registrations
-License: What license it uses
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
+Depends:
+    R (>= 3.5.2)
 Imports:
     httr (>= 1.4.0),
     jsonlite (>= 1.6),
     lubridate (>= 1.7.4),
-    magrittr,
+    magrittr (>= 1.5),
     roxygen2 (>= 6.1.1),
     tidyverse (>= 1.2.1),
     zoo (>= 1.8-4),
-    govstyle
+    govstyle (>= 0.1.2),
+    assertthat (>= 0.2.0)
 RoxygenNote: 6.1.1
+Suggests: 
+    testthat
