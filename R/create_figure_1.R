@@ -6,8 +6,8 @@
 #' @param year_to_date Last month in quarter: March, June, September, December
 #' @return year to data sums to plot figure 1
 #' @examples
+#' \dontrun{create_figure_1(data, year_to_date)}
 #' @export
-#' create_figure_1(data)
 
 create_figure_1 <- function(data, year_to_date) {
 

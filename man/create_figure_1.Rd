@@ -20,5 +20,5 @@ Plots total number of Nino Registrations from EU, outside the EU and the total.
 Assumes data is of type list by default and data frame is the first element of the list.
 }
 \examples{
-create_figure_1(data)
+\dontrun{create_figure_1(data, year_to_date)}
 }

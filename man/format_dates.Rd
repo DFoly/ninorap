@@ -16,5 +16,5 @@ returns the formatted dates vector
 This function formats dates for year end filtering calculations needed to produce figure 1.
 }
 \examples{
-format_dates (data)
+\dontrun{format_dates (data)}
 }

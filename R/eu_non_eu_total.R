@@ -3,10 +3,11 @@
 #' to construct a time series graph of these registrations over time.
 #' @param start_date start date of data we want
 #' @param end_date what date do we want data until
-#' @param apiKe y apiKey for stat-xplore: you will need to create an account to generate a key.
+#' @param frequency One of quarter, month, annual
+#' @param apiKey apiKey for stat-xplore: you will need to create an account to generate a key.
 #' @param verbose if true, it will return information sent to the Stat-Xplore server.
 #' @return class containing data and other attributes useful for plotting
-#' @examples eu_non_eu_total("2002-03-01", "2018-12-01", "quarter", 3, TRUE)
+#' @examples \dontrun{eu_non_eu_total("2002-03-01", "2018-12-01", "quarter", 3, TRUE)}
 #' @source \url{https://stat-xplore.dwp.gov.uk/webapi/jsf/login.xhtml}
 #' @export
 
@@ -115,7 +116,6 @@ generate_date_sequence <- function(start_date, end_date, frequency) {
 
 
 
-#df_struct <- eu_non_eu_total("2002-03-01", "2010-12-01", "quarter")
-
+#test_data <- eu_non_eu_total("2002-03-01", "2010-12-01", "quarter")
 # Year to date for quarterly data
 # df_new <- zoo::rollapply(df, 4, sum, by.column=TRUE)

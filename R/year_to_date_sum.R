@@ -3,7 +3,7 @@
 #' @param year_to_date Last month in quarter: March, June, September, December
 #' @return list containing data frame, dates and length of time series
 #' @examples
-#' year_to_date_sum (data, "Mar")
+#' \dontrun{year_to_date_sum (data, "Mar")}
 
 
 year_to_date_sum <- function(data, year_to_date) {

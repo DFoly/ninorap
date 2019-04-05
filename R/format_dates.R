@@ -3,7 +3,7 @@
 #' @param data raw data obtained from the API
 #' @return returns the formatted dates vector
 #' @examples
-#' format_dates (data)
+#' \dontrun{format_dates (data)}
 
 
 format_dates <- function(data) {
