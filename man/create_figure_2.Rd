@@ -18,5 +18,5 @@ pie chart showing number of registrations from EU vs Non-EU
 This function produces Figure 2 (pie chart) in the Nino Statistical Publication
 }
 \examples{
-create_figure_2(data, year_to_date)
+\dontrun{create_figure_2(data, year_to_date)}
 }

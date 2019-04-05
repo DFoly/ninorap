@@ -16,9 +16,11 @@ eu_non_eu_total(start_date, end_date, frequency, apiKey, verbose = FALSE)
 
 \item{end_date}{what date do we want data until}
 
-\item{verbose}{if true, it will return information sent to the Stat-Xplore server.}
+\item{frequency}{One of quarter, month, annual}
 
-\item{apiKe}{y apiKey for stat-xplore: you will need to create an account to generate a key.}
+\item{apiKey}{apiKey for stat-xplore: you will need to create an account to generate a key.}
+
+\item{verbose}{if true, it will return information sent to the Stat-Xplore server.}
 }
 \value{
 class containing data and other attributes useful for plotting
@@ -29,5 +31,5 @@ to Nino Registrations from the EU and outside the EU. This data is used
 to construct a time series graph of these registrations over time.
 }
 \examples{
-eu_non_eu_total("2002-03-01", "2018-12-01", "quarter", 3, TRUE)
+\dontrun{eu_non_eu_total("2002-03-01", "2018-12-01", "quarter", 3, TRUE)}
 }

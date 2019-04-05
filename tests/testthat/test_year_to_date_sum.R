@@ -1,3 +1,6 @@
+#' Unit Tests for year to date sum.
+#' @description This tests checks for correctly formatted paramters.
+
 context("Year to date sum works correctly")
 
 year_to_date <- "Mar"

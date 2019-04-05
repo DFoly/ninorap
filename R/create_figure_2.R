@@ -4,7 +4,7 @@
 #' @param year_to_date Last month in quarter: one of Mar, Jun, Sep, Dec
 #' @return pie chart showing number of registrations from EU vs Non-EU
 #' @examples
-#' create_figure_2(data, year_to_date)
+#' \dontrun{create_figure_2(data, year_to_date)}
 #' @export
 
 create_figure_2 <- function(data, year_to_date) {

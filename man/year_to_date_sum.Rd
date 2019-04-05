@@ -18,5 +18,5 @@ list containing data frame, dates and length of time series
 This function calculates the Year to date sum for Figure 1 in the report
 }
 \examples{
-year_to_date_sum (data, "March")
+\dontrun{year_to_date_sum (data, "Mar")}
 }
