@@ -23,7 +23,4 @@ test_that("Frequency is correctly formatted", {
   expect_that(frequency %in% frequency_vec, equals(TRUE))
 })
 
-test_that("Check that we return a list object", {
-  expect_that(typeof(eu_non_eu_total(start_date, end_date, frequency)), equals("list"))
-})
 

@@ -13,6 +13,8 @@ LazyData: true
 Depends:
     R (>= 3.5.2.0)
 Imports:
+    dplyr (>= 0.8.0.1),
+    ggplot2 (>= 3.1.0),
     httr (>= 1.4.0),
     jsonlite (>= 1.6),
     lubridate (>= 1.7.4),
