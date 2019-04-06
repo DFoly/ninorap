@@ -19,7 +19,7 @@ environment:
    WARNINGS_ARE_ERRORS: 1
    USE_RTOOLS: true
 
-
+r_github_packages: ukgovdatascience/govstyle
 
 build_script:
   - travis-tool.sh install_deps
