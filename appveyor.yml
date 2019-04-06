@@ -19,10 +19,10 @@ environment:
    WARNINGS_ARE_ERRORS: 1
    USE_RTOOLS: true
 
-r_github_packages: ukgovdatascience/govstyle
-
+# Build fails without telling appveyor about github package
 build_script:
   - travis-tool.sh install_deps
+  - travis-tool.sh install_github ukgovdatascience/govstyle
 
 test_script:
   - travis-tool.sh run_tests
