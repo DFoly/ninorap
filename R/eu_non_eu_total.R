@@ -117,5 +117,6 @@ generate_date_sequence <- function(start_date, end_date, frequency) {
 
 
 #test_data <- eu_non_eu_total("2002-03-01", "2010-12-01", "quarter")
+#df_struct <- eu_non_eu_total("2002-03-01", "2018-12-01", "quarter")
 # Year to date for quarterly data
 # df_new <- zoo::rollapply(df, 4, sum, by.column=TRUE)

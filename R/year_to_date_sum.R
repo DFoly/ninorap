@@ -25,7 +25,7 @@ year_to_date_sum <- function(data, year_to_date) {
 }
 
 # Testing function
-#temp <- year_to_date_sum(df_struct, "Dec")
+#data <- year_to_date_sum(df_struct, "Dec")
 #plot_data <- as.data.frame(temp[[1]])
 #dates_temp <- temp[[2]]
 
