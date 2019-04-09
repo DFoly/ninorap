@@ -11,6 +11,8 @@
 
 create_figure_1 <- function(data, year_to_date) {
 
+                   #year_to_date_sum()
+                   #extract_year_end_data(data, year_to_date, year_end_filter, labels)
   year_end_data <- dplyr::filter(data[[1]], grepl(year_to_date, data[[1]]$quarter_dates))
   N = dim(year_end_data[1])[1]
 
