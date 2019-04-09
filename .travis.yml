@@ -5,7 +5,9 @@ sudo: false
 cache: packages
 warnings_are_errors: false
 
-#r_github_packages: ukgovdatascience/govstyle
+r_github_packages: ukgovdatascience/govstyle@ab9913b
+
+#Remotes: ukgovdatascience/govstyle
 
 os:
  - linux
