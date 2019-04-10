@@ -11,10 +11,12 @@
 
 create_figure_1 <- function(data, year_to_date) {
 
+  data <- year_to_date_sum(data, year_to_date)
   year_end_data <- dplyr::filter(data[[1]], grepl(year_to_date, data[[1]]$quarter_dates))
   N = dim(year_end_data[1])[1]
 
   # for geom_text()
+  # change hardcode values to extract labels
   eu_min <- min(year_end_data$European_Union)/10
   non_eu_min <- min(year_end_data$non_eu)/10
   total_min <- min(year_end_data$Total)/10
@@ -49,6 +51,6 @@ create_figure_1 <- function(data, year_to_date) {
 
 }
 
-
+#data = test_data
 #pp <- create_figure_1(data, "Dec")
 

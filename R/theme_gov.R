@@ -129,3 +129,9 @@ gov_cols <- c(
   grass_green = "#85994B",
   govuk_blue  = "#005EA5"
 )
+
+
+
+label_lookup <- list("European_Union" = "EU", "European_Union_EU8" = "EU8",
+                     "Rest_of_the_World" = "Rest of World", "European_Union_EU15" = "EU15",
+                     "European_Union_EU2" = "EU2", "Other_/_unknown" = "Other")
