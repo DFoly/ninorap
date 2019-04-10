@@ -37,7 +37,7 @@ create_figure_2 <- function(data, year_to_date) {
 
               ggplot2::geom_text(ggplot2::aes(label = c("EU15", "EU2","EU8", "Non EU")), position = ggplot2::position_stack(vjust = 0.5),
                                                                       fontface = "bold", colour = "white") +
-                                                                      govstyle::theme_gov(base_size = 12, base_colour = "gray60") +
+                                                                      theme_gov(base_size = 12, base_colour = "gray60") +
               ggplot2::scale_fill_manual(values=c("non_eu" = "#F47738", "European_Union_EU15" = "#005EA5","European_Union_EU8" = "#005EA5","European_Union_EU2"="#005EA5"))+
 
               # get rid of axis and value labels
