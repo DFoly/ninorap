@@ -1,5 +1,5 @@
 #' This function calculates the Year to date sum for Figure 1 in the report
-#' @param data raw data obtained from the API
+#' @param data raw data returned from the API call
 #' @param year_to_date Last month in quarter: March, June, September, December
 #' @return list containing data frame, dates and length of time series
 #' @examples

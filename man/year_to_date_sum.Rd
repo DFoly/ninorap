@@ -7,7 +7,7 @@
 year_to_date_sum(data, year_to_date)
 }
 \arguments{
-\item{data}{raw data obtained from the API}
+\item{data}{raw data returned from the API call}
 
 \item{year_to_date}{Last month in quarter: March, June, September, December}
 }
