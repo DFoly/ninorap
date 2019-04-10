@@ -2,7 +2,7 @@
 #' @description This function produces Figure 1 from the publication.
 #' Plots total number of Nino Registrations from EU, outside the EU and the total.
 #' Assumes data is of type list by default and data frame is the first element of the list.
-#' @param data data to plot
+#' @param data raw data from API call
 #' @param year_to_date Last month in quarter: March, June, September, December
 #' @return year to data sums to plot figure 1
 #' @examples
@@ -39,7 +39,7 @@ create_figure_1 <- function(data, year_to_date) {
   graph <- g + ggplot2::annotate("text", x=x_len, y = eu_latest[[1]]+eu_min*(eu_shift), label=paste0("EU: ",eu_latest," "), color = "#2E358B") +
            ggplot2::annotate("text", x=x_len, y = non_eu_latest[[1]]+non_eu_min*(non_eu_shift), label=paste0("Non-EU: ",non_eu_latest," "), color = "#F47738") +
            ggplot2::annotate("text", x=x_len, y = total_latest[[1]]+total_min*(total_shift), label=paste0("Total: ",total_latest," "), color = "grey") +
-           govstyle::theme_gov(base_size = 12, base_colour = "gray60") + ggplot2::labs(x = "12 months ending", y = 'Registrations in Thousands')
+           theme_gov(base_size = 12, base_colour = "gray60") + ggplot2::labs(x = "12 months ending", y = 'Registrations in Thousands')
 
   #Fix axis labels
 

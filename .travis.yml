@@ -5,10 +5,9 @@ sudo: false
 cache: packages
 warnings_are_errors: false
 
-install:
-- R -e 'devtools::install_github("ukgovdatascience/govstyle", force=TRUE)'
-
-#r_github_packages: ukgovdatascience/govstyle
+# builed failed without force install
+#install:
+#- R -e 'devtools::install_github("ukgovdatascience/govstyle", force=TRUE)'
 
 os:
  - linux

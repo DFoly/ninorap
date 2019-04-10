@@ -21,7 +21,6 @@ environment:
 
 # Build fails without telling appveyor about github package
 build_script:
-  - travis-tool.sh install_github ukgovdatascience/govstyle
   - travis-tool.sh install_deps
 
 

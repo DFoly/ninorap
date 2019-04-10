@@ -32,4 +32,4 @@ year_to_date_sum <- function(data, year_to_date) {
 # Now should be able to filter by year ending quarter
 #dplyr::filter(temp[[1]], grepl('Mar', temp[[1]]$quarter_dates))
 
-#data <-  year_to_date_sum(df_struct, "Dec")
+#data <-  year_to_date_sum(test_data, "Dec")

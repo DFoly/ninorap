@@ -7,7 +7,7 @@
 create_figure_1(data, year_to_date)
 }
 \arguments{
-\item{data}{data to plot}
+\item{data}{raw data from API call}
 
 \item{year_to_date}{Last month in quarter: March, June, September, December}
 }
