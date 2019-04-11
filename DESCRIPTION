@@ -2,10 +2,14 @@ Package: ninorap
 Title: What the Package Does (One Line, Title Case)
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "Daniel",
+    c(person(given = "Daniel",
            family = "Foley",
            role = c("aut", "cre"),
-           email = "dan.foley@dwp.gsi.gov.uk")
+           email = "dan.foley@dwp.gsi.gov.uk"),
+      person(given = "Aoife",
+           family = "O' Neill",
+           role = "aut",
+           email = "aoife.o'neill@dwp.gsi.gov.uk"))
 Description: Reproducible Analytical Pipeline (RAP) for Nino Registrations.
 License: GPL-3
 Encoding: UTF-8
