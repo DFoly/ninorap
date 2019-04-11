@@ -135,3 +135,5 @@ gov_cols <- c(
 label_lookup <- list("European_Union" = "EU", "European_Union_EU8" = "EU8",
                      "Rest_of_the_World" = "Rest of World", "European_Union_EU15" = "EU15",
                      "European_Union_EU2" = "EU2", "Other_/_unknown" = "Other")
+
+wrapper <- function(x, ...) paste(strwrap(x, ...), collapse = "\n")

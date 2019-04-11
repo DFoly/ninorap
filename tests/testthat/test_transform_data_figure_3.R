@@ -1,6 +1,6 @@
 #' Unit Tests for extract_year_end_data
 #' @description Takes in data from API call tests if function runs correctly
-context("Tests that extract_year_end_data works")
+context("Tests that transform_data_figure_3 works")
 
 year_to_date = "Dec"
 year_end_filter = "quarter_dates"
