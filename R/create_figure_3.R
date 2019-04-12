@@ -2,27 +2,30 @@
 #' @description This function produces Figure 3 from the publication.
 #' Plots total number of Nino Registrations from EU2, EU8 and EU15.
 #' @param data raw data from API call
-#' @param year_to_date Last month in quarter: March, June, September, December
+#' @param year_to_date Last month in quarter, one of: Mar, Jun, Sep, Dec
 #' @param year_end_filter raw data from API call
-#' @param labels labels from API call must be in colnames of API call
+#' @param labels labels from API call must be in colnames of data
 #' use data$colnames to see available choices
-#' @return plor of class ggplot
+#' @return plot of class ggplot
 #' @examples
 #' \dontrun{create_figure_3(data, year_to_date)}
 #' @export
 
-create_figure_3 <- function(data, year_to_date, year_end_filter, labels){
+create_figure_3 <- function(data, year_to_date, year_end_filter, labels, save=TRUE){
 
 
   out <- tryCatch(
     expr = {
 
       data <- transform_data_figure_3(data, year_to_date, year_end_filter, labels)
+      nrows = dim(data)[1]
+      ncol = dim(data)[2]
+      # Scale data for plotting
+      data[,ncol] <- data[,ncol]/1000
 
       ####################
       # Create Plot
       ###################
-      nrows <- nrow(data)
       x_len = length(data$quarter_dates)/ncol(data)
       unique_countries <- unique(data$variable)
       unique_quarter_dates <- unique(data$quarter_dates)
@@ -94,9 +97,9 @@ create_figure_3 <- function(data, year_to_date, year_end_filter, labels){
 
 
 
-
-    ggplot2::ggsave("nino_registrations_EU.png", plot = g, width = 20, height = 10)
-
+    if (save==TRUE){
+      ggplot2::ggsave("nino_registrations_EU.png", plot = g, width = 20, height = 10)
+    }
     return(g)
   ##
     },

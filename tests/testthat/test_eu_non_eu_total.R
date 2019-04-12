@@ -9,10 +9,6 @@ end_date <- "2016-12-01"
 frequency <- "quarter"
 frequency_vec <- c("quarter", "month", "annual")
 
-test_that("Function runs correctly", {
-  expect_silent(eu_non_eu_total(start_date, end_date, frequency))
-})
-
 
 test_that("Dates are formated correctly and start and end dates are less then current date", {
   expect_equal(nchar(start_date), 10)

@@ -5,6 +5,9 @@ sudo: false
 cache: packages
 warnings_are_errors: false
 
+after_success:
+    - Rscript -e 'covr::codecov()'
+
 # builed failed without force install
 #install:
 #- R -e 'devtools::install_github("ukgovdatascience/govstyle", force=TRUE)'

@@ -5,16 +5,18 @@
 context("Tests that figure 2 is producing the correct plot")
 
 year_to_date = "Dec"
+data = test_data
 
-test_that("Functions runs correctly", {
-  data <- year_to_date_sum(ninorap::test_data, year_to_date)
-  expect_silent(create_figure_2(data, year_to_date))
+test_that("Functions runs correctly with different year end dates", {
+  expect_silent(create_figure_2(data, year_to_date, FALSE))
+  expect_silent(create_figure_2(data, "Mar", FALSE))
+  expect_silent(create_figure_2(data, "Jun", FALSE))
+  expect_silent(create_figure_2(data, "Sep", FALSE))
 })
 
 test_that("Figure is of type ggplot and is labelled correctly", {
 
-  data_test <- year_to_date_sum(ninorap::test_data, year_to_date)
-  p <- create_figure_2(data_test, year_to_date)
+  p <- create_figure_2(data, year_to_date)
   expect_equal(class(p), c('gg', 'ggplot'))
 
   expect_error(create_figure_2(data, "Jul"))
