@@ -85,6 +85,8 @@ eu_non_eu_total <- function(start_date, end_date, frequency, apiKey, verbose = F
       ),
       class = "eu_non_eu_data")
 
+      message("API call Successful!")
+
     return(x)
     ##
       },

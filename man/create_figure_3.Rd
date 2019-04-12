@@ -9,15 +9,15 @@ create_figure_3(data, year_to_date, year_end_filter, labels)
 \arguments{
 \item{data}{raw data from API call}
 
-\item{year_to_date}{Last month in quarter: March, June, September, December}
+\item{year_to_date}{Last month in quarter, one of: Mar, Jun, Sep, Dec}
 
 \item{year_end_filter}{raw data from API call}
 
-\item{labels}{labels from API call must be in colnames of API call
+\item{labels}{labels from API call must be in colnames of data
 use data$colnames to see available choices}
 }
 \value{
-plor of class ggplot
+plot of class ggplot
 }
 \description{
 This function produces Figure 3 from the publication.

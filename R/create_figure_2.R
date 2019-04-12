@@ -1,14 +1,17 @@
 #' @title create_figure_2
 #' @description This function produces Figure 2 (pie chart) in the Nino Statistical Publication
-#' @param data data to plot
+#' @param data raw data from API
 #' @param year_to_date Last month in quarter: one of Mar, Jun, Sep, Dec
+#' @param save Whether to save the plot or not. TRUE by default
 #' @return pie chart showing number of registrations from EU vs Non-EU
 #' @examples
 #' \dontrun{create_figure_2(data, year_to_date)}
 #' @export
 
-create_figure_2 <- function(data, year_to_date) {
+create_figure_2 <- function(data, year_to_date, save=TRUE) {
 
+
+  data <- year_to_date_sum(data, year_to_date)
   year_end_data <- dplyr::filter(data[[1]], grepl(year_to_date, data[[1]]$quarter_dates))
   N = dim(year_end_data[1])[1]
 
@@ -53,8 +56,11 @@ create_figure_2 <- function(data, year_to_date) {
                     panel.grid.major=ggplot2::element_blank(),
                     panel.grid.minor=ggplot2::element_blank(),
                     plot.background=ggplot2::element_blank())
+  if (save==TRUE){
 
-  ggplot2::ggsave("eu_non_eu_pie.png", plot = pie, width = 20, height = 10)
+    ggplot2::ggsave("eu_non_eu_pie.png", plot = pie, width = 20, height = 10)
+  }
+
   return(pie)
 
 }

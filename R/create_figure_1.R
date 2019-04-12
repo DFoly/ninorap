@@ -4,16 +4,20 @@
 #' Assumes data is of type list by default and data frame is the first element of the list.
 #' @param data raw data from API call
 #' @param year_to_date Last month in quarter: March, June, September, December
+#' @param save Whether to save the plot or not. TRUE by default
 #' @return year to data sums to plot figure 1
 #' @examples
 #' \dontrun{create_figure_1(data, year_to_date)}
 #' @export
 
-create_figure_1 <- function(data, year_to_date) {
+create_figure_1 <- function(data, year_to_date, save=TRUE) {
 
   data <- year_to_date_sum(data, year_to_date)
   year_end_data <- dplyr::filter(data[[1]], grepl(year_to_date, data[[1]]$quarter_dates))
   N = dim(year_end_data[1])[1]
+
+  # Scale data for plotting
+  year_end_data[,3:dim(year_end_data)[2]] <- year_end_data[,3:dim(year_end_data)[2]]/1000
 
   # for geom_text()
   # change hardcode values to extract labels
@@ -32,25 +36,28 @@ create_figure_1 <- function(data, year_to_date) {
            ggplot2::geom_line(ggplot2::aes(y = Total, group = 1),linetype = "dashed",color = "grey", size = 1)
 
   # check growth rates
-  eu_shift = ifelse(year_end_data$European_Union[N] - year_end_data$European_Union[N-1]>0,1,0)
-  non_eu_shift =  ifelse(year_end_data$non_eu[N] - year_end_data$non_eu[N-1]>0,1,0)
-  total_shift =  ifelse(year_end_data$Total[N] - year_end_data$Total[N-1]>0,1,0)
+  eu_shift = ifelse(year_end_data$European_Union[N] - year_end_data$European_Union[N-1]>0,1,-1)
+  non_eu_shift =  ifelse(year_end_data$non_eu[N] - year_end_data$non_eu[N-1]>0,1,-1)
+  total_shift =  ifelse(year_end_data$Total[N] - year_end_data$Total[N-1]>0,1,-1)
 
 
   # Adds last data point as text
-  graph <- g + ggplot2::annotate("text", x=x_len, y = eu_latest[[1]]+eu_min*(eu_shift), label=paste0("EU: ",eu_latest," "), color = "#2E358B") +
-           ggplot2::annotate("text", x=x_len, y = non_eu_latest[[1]]+non_eu_min*(non_eu_shift), label=paste0("Non-EU: ",non_eu_latest," "), color = "#F47738") +
-           ggplot2::annotate("text", x=x_len, y = total_latest[[1]]+total_min*(total_shift), label=paste0("Total: ",total_latest," "), color = "grey") +
+  graph <- g + ggplot2::annotate("text", x=x_len, y = eu_latest[[1]]+eu_min*(eu_shift), label=paste0("EU: ",round(eu_latest)," "), color = "#2E358B") +
+           ggplot2::annotate("text", x=x_len, y = non_eu_latest[[1]]+non_eu_min*(non_eu_shift), label=paste0("Non-EU: ",round(non_eu_latest)," "), color = "#F47738") +
+           ggplot2::annotate("text", x=x_len, y = total_latest[[1]]+total_min*(total_shift), label=paste0("Total: ",round(total_latest)," "), color = "grey") +
            theme_gov(base_size = 12, base_colour = "gray60") + ggplot2::labs(x = "12 months ending", y = 'Registrations in Thousands')
 
   #Fix axis labels
 
   # Save as png
-  ggplot2::ggsave("nino_registrations.png", plot = graph, width = 20, height = 10)
+  if (save==TRUE){
+    ggplot2::ggsave("nino_registrations.png", plot = graph, width = 20, height = 10)
+  }
+
   return(graph)
 
 }
 
 #data = test_data
-#pp <- create_figure_1(data, "Dec")
+#pp <- create_figure_1(data, "Sep", FALSE)
 

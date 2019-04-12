@@ -7,8 +7,11 @@ year_to_date = "Dec"
 data = test_data
 
 
-test_that("Functions runs correctly", {
-  expect_silent(create_figure_1(data, year_to_date))
+test_that("Functions runs correctly with different year end dates", {
+  expect_silent(create_figure_1(data, year_to_date, FALSE))
+  expect_silent(create_figure_1(data, "Mar",FALSE))
+  expect_silent(create_figure_1(data, "Jun", FALSE))
+  expect_silent(create_figure_1(data, "Sep", FALSE))
 })
 
 
