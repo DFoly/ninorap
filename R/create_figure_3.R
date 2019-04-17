@@ -5,6 +5,7 @@
 #' @param year_to_date Last month in quarter, one of: Mar, Jun, Sep, Dec
 #' @param year_end_filter raw data from API call
 #' @param labels labels from API call must be in colnames of data
+#' @param save whether or not to save figure as png Default is TRUE
 #' use data$colnames to see available choices
 #' @return plot of class ggplot
 #' @examples
@@ -12,7 +13,6 @@
 #' @export
 
 create_figure_3 <- function(data, year_to_date, year_end_filter, labels, save=TRUE){
-
 
   out <- tryCatch(
     expr = {
@@ -28,7 +28,7 @@ create_figure_3 <- function(data, year_to_date, year_end_filter, labels, save=TR
       ###################
       x_len = length(data$quarter_dates)/ncol(data)
       unique_countries <- unique(data$variable)
-      unique_quarter_dates <- unique(data$quarter_dates)
+      unique_quarter_dates <- as.character(unique(data$quarter_dates))
 
       group.colors <- unique_countries
       group.colors <- c(EU2 = "#2B8CC4", EU8 = "#2E358B", EU15 ="grey60")
@@ -44,12 +44,20 @@ create_figure_3 <- function(data, year_to_date, year_end_filter, labels, save=TR
       text_for_plot <- c("2004-EU8 joined the EU", "2010-Eurozone debt impact",
                 "2014-Lifting of transitional controls for EU2",
                 "2016-EU Referendum")
-      important_dates <- c("Dec 04", "Dec 10", "Dec 14", "Dec 16")
+
+      # Create important dates based on year_to_date_value: not perfect but labels
+      # approximately correct
+      important_dates <- c()
+      years = c("04", "10", "14", "16")
+      for (date in 1:length(text_for_plot)) {
+        important_dates[date] = paste(year_to_date,years[date], collapse = "")
+      }
+
       indices <- c()
       for (i in 1:length(important_dates)) {
-        print(i)
-        print(important_dates[i])
-        indices[i] = which(important_dates[i] == unique_quarter_dates)
+        #print(i)
+        #print(important_dates[i])
+        indices[i] =  which(important_dates[i] == unique_quarter_dates)
       }
 
       # The following calulations all help with the positioning of labels
@@ -63,10 +71,6 @@ create_figure_3 <- function(data, year_to_date, year_end_filter, labels, save=TR
       EU2_latest <- data[(data$quarter_dates == latest_date) & (data$variable == "EU2"),]$value
       EU15_latest <- data[(data$quarter_dates == latest_date) & (data$variable == "EU15"),]$value
 
-      # check growth rates to ADJUST LABELS at end of graph
-      EU15_shift = ifelse(country_latest[1] - data$value[row_indices[1]]>0,1,-1)
-      EU8_shift =  ifelse(country_latest[2] - data$value[row_indices[2]]>0,1,-1)
-      EU2_shift =  ifelse(country_latest[3] - data$value[row_indices[3]]>0,1,-1)
 
       EU15_min = min(data[data$variable == "EU15",]$value)
       EU8_min = min(data[data$variable == "EU8",]$value)
@@ -82,40 +86,42 @@ create_figure_3 <- function(data, year_to_date, year_end_filter, labels, save=TR
         counter = counter + 1
       }
 
+      # check growth rates to ADJUST LABELS at end of graph
+      EU15_shift = ifelse(EU8_latest - data$value[row_indices[1]]>0,1,-1)
+      EU8_shift =  ifelse(EU2_latest - data$value[row_indices[2]]>0,1,-1)
+      EU2_shift =  ifelse(EU15_latest - data$value[row_indices[3]]>0,1,-1)
 
-      #annotate important events
-      g + ggplot2::annotate("text", x = indices, y = y_max-y_min, label = stringr::str_wrap(text_for_plot, 2)) +
+      #annotate important events and Annotate origin
+      g2 <- g + ggplot2::annotate("text", x = indices, y = y_max-y_min, label = stringr::str_wrap(text_for_plot, 2)) +
 
-          # Annotate origin
-          ggplot2::annotate("text", x =x_len, y = country_latest[1]+EU15_shift*(EU8_min), label = unique_countries[1],
-                            color = group.colors[unique_countries[1]]) +
-          ggplot2::annotate("text", x =x_len, y = country_latest[2]+EU8_shift*(EU8_min), label = unique_countries[2],
-                          color = group.colors[unique_countries[2]]) +
-          ggplot2::annotate("text", x =x_len, y = country_latest[3]+EU2_shift*(EU8_min), label = unique_countries[3],
-                          color = group.colors[unique_countries[3]])
+                ggplot2::annotate("text", x =x_len, y = country_latest[1]+EU15_shift*(EU8_min), label = unique_countries[1],
+                                  color = group.colors[unique_countries[1]]) +
+                ggplot2::annotate("text", x =x_len, y = country_latest[2]+EU8_shift*(EU8_min), label = unique_countries[2],
+                                color = group.colors[unique_countries[2]]) +
+                ggplot2::annotate("text", x =x_len, y = country_latest[3]+EU2_shift*(EU8_min), label = unique_countries[3],
+                                color = group.colors[unique_countries[3]])
 
+      if (save == TRUE) {
+        ggplot2::ggsave("figure_3.png", plot = g2, width = 20, height = 10)
+      }
+      return (g2)
+      ##
+        },
+      warning = function() {
 
+        w <- warnings()
+        warning('Warning produced running in eu_non_eu_total():', w)
 
+      },
+      error = function(e)  {
 
-    if (save==TRUE){
-      ggplot2::ggsave("nino_registrations_EU.png", plot = g, width = 20, height = 10)
+        stop('Error produced running eu_non_eu_total():', e)
+
+      },
+      finally = {}
+      )
     }
-    return(g)
-  ##
-    },
-  warning = function() {
 
-    w <- warnings()
-    warning('Warning produced running in create_figure_3():', w)
 
-  },
-  error = function(e)  {
 
-    stop('Error produced running  create_figure_3():', e)
-
-  },
-  finally = {}
-  )
-}
-
-#create_figure_3(data, year_to_date, year_end_filter, labels)
+#create_figure_3(data, year_to_date, year_end_filter, labels, FALSE)

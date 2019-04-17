@@ -4,12 +4,14 @@
 \alias{create_figure_2}
 \title{create_figure_2}
 \usage{
-create_figure_2(data, year_to_date)
+create_figure_2(data, year_to_date, save = TRUE)
 }
 \arguments{
-\item{data}{data to plot}
+\item{data}{raw data from API}
 
 \item{year_to_date}{Last month in quarter: one of Mar, Jun, Sep, Dec}
+
+\item{save}{Whether to save the plot or not. TRUE by default}
 }
 \value{
 pie chart showing number of registrations from EU vs Non-EU

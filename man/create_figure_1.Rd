@@ -4,12 +4,14 @@
 \alias{create_figure_1}
 \title{Create Figure 1}
 \usage{
-create_figure_1(data, year_to_date)
+create_figure_1(data, year_to_date, save = TRUE)
 }
 \arguments{
 \item{data}{raw data from API call}
 
 \item{year_to_date}{Last month in quarter: March, June, September, December}
+
+\item{save}{Whether to save the plot or not. TRUE by default}
 }
 \value{
 year to data sums to plot figure 1
