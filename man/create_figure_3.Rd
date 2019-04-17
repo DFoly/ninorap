@@ -4,7 +4,7 @@
 \alias{create_figure_3}
 \title{Create Figure 3}
 \usage{
-create_figure_3(data, year_to_date, year_end_filter, labels)
+create_figure_3(data, year_to_date, year_end_filter, labels, save = TRUE)
 }
 \arguments{
 \item{data}{raw data from API call}
@@ -13,7 +13,9 @@ create_figure_3(data, year_to_date, year_end_filter, labels)
 
 \item{year_end_filter}{raw data from API call}
 
-\item{labels}{labels from API call must be in colnames of data
+\item{labels}{labels from API call must be in colnames of data}
+
+\item{save}{whether or not to save figure as png Default is TRUE
 use data$colnames to see available choices}
 }
 \value{
