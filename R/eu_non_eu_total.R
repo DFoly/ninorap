@@ -16,6 +16,12 @@ eu_non_eu_total <- function(start_date, end_date, frequency, apiKey, verbose = F
 
     apiKey <- "65794a30655841694f694a4b563151694c434a68624763694f694a49557a49314e694a392e65794a7063334d694f694a7a644849756333526c6247786863694973496e4e3159694936496d5268626d35355a6a4532514768766447316861577775593239744969776961574630496a6f784e54517a4f5445354f4455304c434a68645751694f694a7a6448497562325268496e302e70496474346b5763677546564d42486b6773484f306a6d5f536d556b6a33586e574946527041516f794f6f"
 
+    assertthat::is.string(start_date)
+    assertthat::is.string(end_date)
+    assertthat::is.string(frequency)
+    assertthat::assert_that(frequency %in% c("month", "quarter", "day", "year"))
+    assertthat::is.string(apiKey)
+
     out <- tryCatch(
       expr = {
 

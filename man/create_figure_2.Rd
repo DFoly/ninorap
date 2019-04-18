@@ -4,7 +4,7 @@
 \alias{create_figure_2}
 \title{create_figure_2}
 \usage{
-create_figure_2(data, year_to_date, save = TRUE)
+create_figure_2(data, year_to_date, save = TRUE, interactive = FALSE)
 }
 \arguments{
 \item{data}{raw data from API}
