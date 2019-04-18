@@ -12,7 +12,11 @@
 #' \dontrun{create_figure_3(data, year_to_date)}
 #' @export
 
-create_figure_3 <- function(data, year_to_date, year_end_filter, labels, save=TRUE){
+create_figure_3 <- function(data, year_to_date, year_end_filter, labels, save=TRUE, interactive=FALSE){
+
+  # graph options
+  size = 1
+
 
   out <- tryCatch(
     expr = {
@@ -32,10 +36,12 @@ create_figure_3 <- function(data, year_to_date, year_end_filter, labels, save=TR
 
       group.colors <- unique_countries
       group.colors <- c(EU2 = "#2B8CC4", EU8 = "#2E358B", EU15 ="grey60")
+
       g <- ggplot2::ggplot(data, ggplot2::aes(x = quarter_dates, y =value,
                                               group = variable, colour = variable,
-                                              linetype = variable)) +
-        ggplot2::geom_path(size = 1.5) + theme_gov() +
+                                              linetype = variable, text = paste('Registrations: ', round(value), '\n' ,
+                                                                                'Date: ', quarter_dates))) +
+        ggplot2::geom_path(size = size) + theme_gov() +
         ggplot2::scale_color_manual(values=group.colors)
 
       #####################################################################
@@ -104,6 +110,11 @@ create_figure_3 <- function(data, year_to_date, year_end_filter, labels, save=TR
       if (save == TRUE) {
         ggplot2::ggsave("figure_3.png", plot = g2, width = 20, height = 10)
       }
+
+      if (interactive==TRUE){
+        g2 <- plotly::ggplotly(p = g2, tooltip = "text")
+      }
+
       return (g2)
       ##
         },
@@ -124,4 +135,4 @@ create_figure_3 <- function(data, year_to_date, year_end_filter, labels, save=TR
 
 
 
-#create_figure_3(data, year_to_date, year_end_filter, labels, FALSE)
+#create_figure_3(data, year_to_date, year_end_filter, labels, FALSE, TRUE)

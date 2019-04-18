@@ -4,7 +4,7 @@
 context("Tests that figure 1 is producing the correct plot")
 
 year_to_date = "Dec"
-data = test_data
+data <- eu_non_eu_total("2002-03-01", "2018-12-01", "quarter")
 
 
 test_that("Functions runs correctly with different year end dates", {
@@ -32,5 +32,10 @@ test_that("Figure is of type ggplot and is labelled correctly", {
 })
 
 
+test_that("Figure is of type plotly and htmlwidget if interactive is TRUE", {
 
+  pp <- create_figure_1(data, year_to_date, FALSE, TRUE)
+  expect_equal(class(pp), c("plotly", "htmlwidget"))
+
+})
 

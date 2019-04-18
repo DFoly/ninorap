@@ -23,6 +23,7 @@ Imports:
     jsonlite (>= 1.6),
     lubridate (>= 1.7.4),
     magrittr (>= 1.5),
+    plotly (>= 4.9.0),
     roxygen2 (>= 6.1.1),
     tidyverse (>= 1.2.1),
     zoo (>= 1.8-4),
