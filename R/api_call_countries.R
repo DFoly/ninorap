@@ -1,54 +1,47 @@
-#' Function accesses the Stat-Xplore API and returns data relating
-#' to Nino Registrations from the EU and outside the EU. This data is used
-#' to construct a time series graph of these registrations over time.
-#' @param start_date start date of data we want: month must be one of 3,6,9,12 so "2017-03-01" is valid "2017-01-01" is not
+#' @title api_call_tables
+#' @description Function accesses the Stat-Xplore API and returns country and UK city data for the latest quarter
+#' @param start_date start date of data we want
 #' @param end_date what date do we want data until
 #' @param frequency One of quarter, month, annual
-#' @param apiKey apiKey for stat-xplore: you will need to create an account to generate a key
-#' @param get_countries if TRUE will get all nationalities, used for top 5 table in publication.
+#' @param apiKey apiKey for stat-xplore: you will need to create an account to generate a key.
 #' @param verbose if true, it will return information sent to the Stat-Xplore server.
 #' @return class containing data and other attributes useful for plotting
 #' @examples \dontrun{eu_non_eu_total("2002-03-01", "2018-12-01", "quarter", 3, TRUE)}
-#' @source \url{https://stat-xplore.dwp.gov.uk/webapi/jsf/login.xhtml}
 #' @export
 
 
-eu_non_eu_total <- function(start_date, end_date, frequency, get_countries=FALSE,verbose = FALSE, apiKey = NULL) {
+api_call_tables <- function(start_date = "2017-03-01", end_date, apiKey,  verbose = FALSE){
 
-    if (is.null(apiKey)) {
+  if (apiKey.isnull()) {
 
-       apiKey <- "65794a30655841694f694a4b563151694c434a68624763694f694a49557a49314e694a392e65794a7063334d694f694a7a644849756333526c6247786863694973496e4e3159694936496d5268626d35355a6a4532514768766447316861577775593239744969776961574630496a6f784e54517a4f5445354f4455304c434a68645751694f694a7a6448497562325268496e302e70496474346b5763677546564d42486b6773484f306a6d5f536d556b6a33586e574946527041516f794f6f"
-    }
+    apiKey <- "65794a30655841694f694a4b563151694c434a68624763694f694a49557a49314e694a392e65794a7063334d694f694a7a644849756333526c6247786863694973496e4e3159694936496d5268626d35355a6a4532514768766447316861577775593239744969776961574630496a6f784e54517a4f5445354f4455304c434a68645751694f694a7a6448497562325268496e302e70496474346b5763677546564d42486b6773484f306a6d5f536d556b6a33586e574946527041516f794f6f"
+  }
 
-    assertthat::is.string(start_date)
-    assertthat::is.string(end_date)
-    assertthat::is.string(frequency)
-    assertthat::assert_that(frequency %in% c("month", "quarter", "day", "year"))
-    assertthat::is.string(apiKey)
+  # checks
+  assertthat::is.string(start_date)
+  assertthat::is.string(end_date)
+  assertthat::is.string(frequency)
+  assertthat::assert_that(frequency %in% c("month", "quarter", "day", "year"))
+  assertthat::is.string(apiKey)
 
-    out <- tryCatch(
-      expr = {
+  out <- tryCatch(
+    expr = {
 
-    # Generate API call for paritcular dates
-    date_list <- generate_date_sequence(start_date, end_date, frequency)
-    dates <- date_list[[1]]
-    length_dates <- date_list[[2]]
-
-
-    # Generate JSON date sequence
-    num_quarters = seq(from=1, to=length_dates, by=1)
-    quarters <- lapply(num_quarters, function(x) paste('["str:value:NINO:f_NINO:QTR:c_QTR:',x,'"',']' ,sep=""))
-    quarters_final <- paste(quarters, collapse=",")
-    # generate world areas for api call
-    country_code_list = c("14", "13", "12", "11", "10", "9", "8", "7", "6", "3", "2", "1")
-    areas <- lapply(country_code_list, function(x) paste('["str:value:NINO:f_NINO:NEWNAT:C_NINO_SUBGROUP:',x,'"',']' ,sep=""))
-    areas <- paste(areas, collapse = ",")
+      date_list <- generate_date_sequence(start_date, end_date, "quarter")
+      dates <- date_list[[1]]
+      length_dates <- date_list[[2]]
 
 
-    # get all individual countries: used for Top 5 nationalities
-    if (get_countries==TRUE) {
+      # Generate JSON date sequence
+      num_quarters = seq(from=1, to=length_dates, by=1)
+      quarters <- lapply(num_quarters, function(x) paste('["str:value:NINO:f_NINO:QTR:c_QTR:',x,'"',']' ,sep=""))
+      quarters_final <- paste(quarters, collapse=",")
 
+      ######################
+      # Generate api call
+      ######################
 
+      # Issue Rstudio crahes when trying to paste this with quarter seletion so this is hardcoded right now
       body <- '{"database":"str:database:NINO","measures":["str:count:NINO:f_NINO"],"recodes":{"str:field:NINO:f_NINO:NEWNAT":{"map":[["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:101"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:102"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:103"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:104"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:105"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:106"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:107"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:108"],
       ["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:109"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:110"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:111"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:112"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:113"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:114"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:201"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:202"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:203"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:204"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:205"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:206"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:207"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:208"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:211"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:212"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:209"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:210"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:213"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:301"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:302"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:303"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:304"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:305"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:306"],
       ["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:307"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:308"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:309"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:310"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:311"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:312"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:314"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:315"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:316"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:317"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:318"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:319"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:320"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:321"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:324"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:603"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:708"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:501"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:502"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:503"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:504"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:515"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:516"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:517"],
@@ -59,71 +52,56 @@ eu_non_eu_total <- function(start_date, end_date, frequency, get_countries=FALSE
       ["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:631"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:632"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:633"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:634"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:635"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:636"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:637"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:638"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:640"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:641"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:642"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:643"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:644"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:645"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:646"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:647"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:648"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:650"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:651"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:653"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:654"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:655"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:549"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:550"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:649"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:701"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:702"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:703"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:704"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:705"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:706"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:707"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:709"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:710"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:711"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:712"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:713"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:714"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:715"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:716"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:717"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:718"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:719"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:720"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:721"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:722"],
       ["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:723"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_COUNTRY:999"]],"total":true},"str:field:NINO:f_NINO:QTR":{"map":[["str:value:NINO:f_NINO:QTR:c_QTR:61"],["str:value:NINO:f_NINO:QTR:c_QTR:62"],["str:value:NINO:f_NINO:QTR:c_QTR:63"],["str:value:NINO:f_NINO:QTR:c_QTR:64"],["str:value:NINO:f_NINO:QTR:c_QTR:65"],["str:value:NINO:f_NINO:QTR:c_QTR:66"],["str:value:NINO:f_NINO:QTR:c_QTR:67"],["str:value:NINO:f_NINO:QTR:c_QTR:68"]],"total":true}},"dimensions":[["str:field:NINO:f_NINO:QTR"],["str:field:NINO:f_NINO:NEWNAT"]]}'
 
-    }else {
-    # need to convert to string
-      body <- paste0('{"database":"str:database:NINO","measures":["str:count:NINO:f_NINO"],"recodes":{"str:field:NINO:f_NINO:NEWNAT":{"map":[["str:value:NINO:f_NINO:NEWNAT:C_NINO_WORLDAREA:1"],',areas,',["str:value:NINO:f_NINO:NEWNAT:C_NINO_WORLDAREA:2"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_WORLDAREA:3"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_WORLDAREA:4"],["str:value:NINO:f_NINO:NEWNAT:C_NINO_WORLDAREA:9"]],"total":true},"str:field:NINO:f_NINO:QTR":{"map":[',quarters_final,'],"total":true}},"dimensions":[["str:field:NINO:f_NINO:QTR"],["str:field:NINO:f_NINO:NEWNAT"]]}', sep='')
+      if (verbose==TRUE) {
+        request <- httr::POST("https://stat-xplore.dwp.gov.uk/webapi/rest/v1/table", httr::add_headers(apiKey = apiKey),
+                              body = body,
+                              encode = "json", httr::verbose())
+      }
+      request <- httr::POST("https://stat-xplore.dwp.gov.uk/webapi/rest/v1/table", httr::add_headers(apiKey = apiKey),
+                            body = body,
+                            encode = "json")
 
-    }
+      get2json<- httr::content(request, as = "parsed")
+      parse2json<- jsonlite::toJSON(get2json, pretty=TRUE) # returns raw data
 
-    if (verbose==TRUE) {
-    request <- httr::POST("https://stat-xplore.dwp.gov.uk/webapi/rest/v1/table", httr::add_headers(apiKey = apiKey),
-                       body = body,
-                       encode = "json", httr::verbose())
-    }
-    request <- httr::POST("https://stat-xplore.dwp.gov.uk/webapi/rest/v1/table", httr::add_headers(apiKey = apiKey),
-                          body = body,
-                          encode = "json")
+      parse_df <- as.data.frame(t(sapply(parse2json, jsonlite::fromJSON)))
 
-    get2json<- httr::content(request, as = "parsed")
-    parse2json<- jsonlite::toJSON(get2json, pretty=TRUE) # returns raw data
+      title <- parse_df$database[[1]]$label
 
-    parse_df <- as.data.frame(t(sapply(parse2json, jsonlite::fromJSON)))
+      # Extract dates
+      data_values <- parse_df$cubes[[1]][[1]][[1]]
+      date_labels <- unlist(parse_df$fields[[1]][[4]][[1]]$labels)
+      nrows = dim(data_values)[1]
+      ncols =  dim(data_values)[2]
+      date_labels <- date_labels[1:nrows-1]
 
-    title <- parse_df$database[[1]]$label
+      # destination labels
+      origin <- unlist(parse_df$fields[[1]][[4]][[2]]$labels)
 
-    # Extract dates
-    data_values <- parse_df$cubes[[1]][[1]][[1]]
-    date_labels <- unlist(parse_df$fields[[1]][[4]][[1]]$labels)
-    nrows = dim(data_values)[1]
-    ncols =  dim(data_values)[2]
-    date_labels <- date_labels[1:nrows-1]
+      # create data frame
+      df <- as.data.frame(data_values)
 
-    # destination labels
-    origin <- unlist(parse_df$fields[[1]][[4]][[2]]$labels)
-
-    # create data frame
-    df <- as.data.frame(data_values)
-
-    colnames(df) <-  gsub(" ", "_", origin)
-    colnames(df) <-  gsub("-", "_", colnames(df))
-
-    #create non-eu data
-    if (get_countries==FALSE) {
-
-        df <- df %>% dplyr::mutate(non_eu = Total - European_Union)
-    }
-
-    totals <- df[nrows,]
-    df <- df[1:nrows-1,]
+      colnames(df) <-  gsub(" ", "_", origin)
+      colnames(df) <-  gsub("-", "_", colnames(df))
 
 
-    #Create class
-    x = structure(
-      list(
-        df = df,
-        #df_year_to_date_sum =
-        title = title,
-        colnames = colnames(df),
-        dates = dates,
-        date_labels = date_labels
-      ),
-      class = "eu_non_eu_data")
+      x = structure(
+        list(
+          df = df,
+          #df_year_to_date_sum =
+          title = title,
+          colnames = colnames(df),
+          dates = dates,
+          date_labels = date_labels
+        ),
+        class = "eu_non_eu_data")
 
       message("API call Successful!")
 
-    return(x)
-    ##
-      },
+
+      return (x)
+      ##
+    },
     warning = function() {
 
       w <- warnings()
@@ -136,22 +114,6 @@ eu_non_eu_total <- function(start_date, end_date, frequency, get_countries=FALSE
 
     },
     finally = {}
-    )
+  )
+
 }
-
-
-generate_date_sequence <- function(start_date, end_date, frequency) {
-  dates <- seq(lubridate::ymd(start_date), lubridate::ymd(end_date), by = frequency)
-  N = length(dates)
-
-  return(list(dates, N))
-}
-
-
-
-
-
-
-#data1 <- eu_non_eu_total("2002-03-01", "2018-12-01", "quarter")
-# Year to date for quarterly data
-# df_new <- zoo::rollapply(df, 4, sum, by.column=TRUE)
