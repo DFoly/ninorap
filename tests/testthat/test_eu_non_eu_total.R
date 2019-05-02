@@ -18,7 +18,6 @@ test_that("Dates are formated correctly and start and end dates are less then cu
 
 test_that("Correct data was retrieved: European",{
   data <- eu_non_eu_total(start_date, end_date, frequency, FALSE)
-  expect_silent(data)
   expect_equal(length(data$colnames), 19)
 })
 
