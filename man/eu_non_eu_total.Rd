@@ -9,18 +9,21 @@ to construct a time series graph of these registrations over time.}
 \url{https://stat-xplore.dwp.gov.uk/webapi/jsf/login.xhtml}
 }
 \usage{
-eu_non_eu_total(start_date, end_date, frequency, apiKey, verbose = FALSE)
+eu_non_eu_total(start_date, end_date, frequency, get_countries = FALSE,
+  verbose = FALSE, apiKey = NULL)
 }
 \arguments{
-\item{start_date}{start date of data we want}
+\item{start_date}{start date of data we want: month must be one of 3,6,9,12 so "2017-03-01" is valid "2017-01-01" is not}
 
 \item{end_date}{what date do we want data until}
 
 \item{frequency}{One of quarter, month, annual}
 
-\item{apiKey}{apiKey for stat-xplore: you will need to create an account to generate a key.}
+\item{get_countries}{if TRUE will get all nationalities, used for top 5 table in publication.}
 
 \item{verbose}{if true, it will return information sent to the Stat-Xplore server.}
+
+\item{apiKey}{apiKey for stat-xplore: you will need to create an account to generate a key}
 }
 \value{
 class containing data and other attributes useful for plotting

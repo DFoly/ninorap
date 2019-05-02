@@ -1,7 +1,6 @@
 #' Unit Tests for figure 2 function
 #' @description This tests checks that the functions runs with no errors and is of type ggplot.
 
-
 context("Tests that figure 2 is producing the correct plot")
 
 year_to_date = "Dec"
@@ -18,7 +17,6 @@ test_that("Functions runs correctly with different year end dates", {
 })
 
 test_that("Figure is of type ggplot and is labelled correctly", {
-
   p <- create_figure_2(data, year_to_date)
   expect_equal(class(p), c('gg', 'ggplot'))
 
@@ -38,7 +36,6 @@ test_that("Figure is of type plotly if interactive is TRUE", {
 })
 
 test_that("Check convert_pie_data returns data.frame and has correct dimensions", {
-
   temp_data <- convert_pie_data(tmp_arr, "value", "Region")
   expect_equal(nrow(temp_data), nrow(tmp_arr))
   expect_equal(ncol(temp_data), ncol(tmp_arr)+1)
