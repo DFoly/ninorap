@@ -9,8 +9,8 @@ after_success:
     - Rscript -e 'covr::codecov()'
 
 # builed failed without force install
-install:
-- R -e 'devtools::install_github("ukgovdatascience/govdown", force=TRUE)'
+#install:
+#    - R -e 'devtools::install_github("ukgovdatascience/govdown", force=TRUE)'
 
 os:
  - linux
