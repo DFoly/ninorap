@@ -27,7 +27,8 @@ Imports:
     roxygen2 (>= 6.1.1),
     tidyverse (>= 1.2.1),
     zoo (>= 1.8-4),
-    assertthat (>= 0.2.0)
+    assertthat (>= 0.2.0),
+    govdown (>= 0.4.1.9000)
 RoxygenNote: 6.1.1
 Suggests: 
     testthat,

@@ -12,8 +12,6 @@ create_figure_3(data, year_to_date, year_end_filter, labels, save = TRUE,
 
 \item{year_to_date}{Last month in quarter, one of: Mar, Jun, Sep, Dec}
 
-\item{year_end_filter}{raw data from API call}
-
 \item{labels}{labels from API call must be in colnames of data}
 
 \item{save}{whether or not to save figure as png Default is TRUE

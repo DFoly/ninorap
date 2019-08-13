@@ -1,14 +1,16 @@
 #' Function accesses the Stat-Xplore API and returns data relating
 #' to Nino Registrations from all countries
-#' @param apiKey apiKey for stat-xplore: you will need to create an account to generate a key.
 #' @param end_date
 #' @param year_to_date Last month in quarter, one of: Mar, Jun, Sep, Dec
+#' @param apiKey apiKey for stat-xplore: you will need to create an account to generate a key.
 #' @return Top 5 countries in terms of Nino Registrations.
 #' @export
 
 
-top_5_table <- function(apiKey, end_date, year_to_date) {
-  start_date = "2017-03-01"
+top_5_table <- function(end_date, year_to_date, apiKey = NULL) {
+    start_date = "2017-03-01"
+
+    assertthat::assert_that(year_to_date %in% c("Mar", "Jun", "Sep", "Dec"))
 
     if (is.null(apiKey)) {
 
@@ -20,7 +22,6 @@ top_5_table <- function(apiKey, end_date, year_to_date) {
           end_date = "2018-12-01"
         }
 
-      year_to_date = "Dec"
       data <- eu_non_eu_total(start_date, end_date, 'quarter', TRUE, FALSE)
       data <- year_to_date_sum(data, year_to_date)
 
@@ -42,3 +43,5 @@ top_5_table <- function(apiKey, end_date, year_to_date) {
       return(top_5)
 
 }
+
+#top_5_table("2018-12-01","Dec", apiKey = "aksjhdkajshd")

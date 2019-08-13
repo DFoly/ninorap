@@ -1,0 +1,126 @@
+---
+title: "Nino Publications"
+author: "Daniel Foley"
+date: "07/06/2019"
+output:
+  govdown::govdown_document:
+    font: "sans-serif" # (default) or "new-transport"
+    favicon: "govuk"
+    logo: "images/govdown-logo-white-on-transparent.svg"
+    logo_url: "https://ukgovdatascience.github.io/govdown"
+    logo_text:  "DWP" 
+    page_title: "Nino Publications"
+    title: "Department for Work and Pensions Statistics"
+    phase: alpha
+    feedback_url: "https://github.com/ukgovdatascience/govdown/issues"
+    google_analytics: "UA-12345678-90"
+---
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+# rmarkdown::render("Nino_main_page.Rmd")
+```
+
+
+```{r }
+data <- eu_non_eu_total("2002-03-01", "2018-12-01", "quarter")
+year_to_date = "Dec"
+year_end_filter = "quarter_dates"
+country_labels = c("European_Union_EU15","European_Union_EU2", "European_Union_EU8", "Oceania",
+           "Central_and_South_America", "North_America", "North_Africa", "Sub_Saharan_Africa",
+           "South_East_Asia", "South_Asia", "East_Asia", "Middle_East_and_Central_Asia")
+labels = c("European_Union_EU15","European_Union_EU2", "European_Union_EU8")
+```
+
+
+
+What do these statistics show? A National Insurance Number (NINo) is generally required by any adult overseas national looking to work or claim benefits / tax credits in
+the UK. As such they show a count, by individual nationality, of the number of NINos registered to adult non-UK nationals each quarter, irrespective of the length of stay in
+the UK. The NINo statistics are not a count of the number of adult non-UK nationals currently residing in the UK
+
+
+## Main stories
+
+### 633 thousand NINos registered in the year to
+December 2018: a 7% decrease on the previous year
+
+
+```{r fig.width=14, fig.height=7}
+create_figure_1(data, "Sep", FALSE, TRUE)
+```
+
+The increase in registrations seen in the last two quarters of the year to March 2019 are likely to reflect
+the processing of pending applications and increased operational activity resulting from the opening of
+two new processing centres.
+
+
+```{css echo=FALSE}
+
+}
+```
+
+$~$
+
+In the year to December 2018, 66% are
+from within the EU.
+
+
+$~$
+
+<center>
+
+```{r fig.width=6, fig.height=6}
+
+create_figure_2(data, year_to_date, FALSE, TRUE)
+```
+</center>
+
+$~$
+
+
+## Where in the world are people registering from?
+
+#### Registrations to EU nationals have continued to fall.
+
+In the year to December 2018, there were 419,000 NINo
+registrations by EU nationals (down 16% on the previous year).
+
+Registrations across all EU sub groups have decreased:
+- EU15 down 14% to 162,000
+- EU8 down 25% to 85,000
+- EU2 down 13% to 168,000
+
+Registrations to EU8 nationals now account for 20% of all EU
+registrations, this is down from 74% in 2007.
+
+Note: There was a sharp rise in NINo registrations in 2014 following the
+removal of restrictions on work for EU2 citizens. Some of this is reflecting
+individuals who were residing in the UK prior 2014 and would only have been
+able to register for a NINo after that date (see arrival to registration analysis
+on EU2 nationals).
+
+ - Registrations to EU8 nationals now account for 19% of all EU
+registrations, this is down from 74% in 2007.
+
+
+- In the year to March 2019 registrations to non-EU national increased by
+17%, to 226,000. 58% of this increase was contributed by the increase
+of registrations to Indian nationals.
+
+
+```{r fig.width=14, fig.height=7}
+create_figure_3(data, year_to_date, year_end_filter, labels, FALSE, TRUE)
+```
+
+
+$~$
+
+## Outside of the EU, South Asia has the most registrations
+
+```{r fig.width=14, fig.height=7}
+create_figure_4(data, year_to_date, country_labels, FALSE, TRUE)
+```
+
+

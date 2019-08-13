@@ -2,7 +2,9 @@
 % Please edit documentation in R/year_to_date_sum.R
 \name{year_to_date_sum}
 \alias{year_to_date_sum}
-\title{This function calculates the Year to date sum for Figure 1 in the report}
+\title{This function calculates the Year to date sum for Figure 1 in the report
+calculates rolling sum depending on the year to date.
+e.g. year_to_date = "Jun" calculates the cumulative sum Mar to June (2 obsevations as quarterly data).}
 \usage{
 year_to_date_sum(data, year_to_date)
 }
@@ -16,6 +18,8 @@ list containing data frame, dates and length of time series
 }
 \description{
 This function calculates the Year to date sum for Figure 1 in the report
+calculates rolling sum depending on the year to date.
+e.g. year_to_date = "Jun" calculates the cumulative sum Mar to June (2 obsevations as quarterly data).
 }
 \examples{
 \dontrun{year_to_date_sum (data, "Mar")}

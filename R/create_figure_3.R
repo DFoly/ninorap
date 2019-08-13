@@ -3,7 +3,7 @@
 #' Plots total number of Nino Registrations from EU2, EU8 and EU15.
 #' @param data raw data from API call
 #' @param year_to_date Last month in quarter, one of: Mar, Jun, Sep, Dec
-#' @param year_end_filter raw data from API call
+#' @param year_end_filter
 #' @param labels labels from API call must be in colnames of data
 #' @param save whether or not to save figure as png Default is TRUE
 #' use data$colnames to see available choices

@@ -5,12 +5,12 @@
 \title{Function accesses the Stat-Xplore API and returns data relating
 to Nino Registrations from all countries}
 \usage{
-top_5_table(apiKey, end_date, year_to_date)
+top_5_table(end_date, year_to_date, apiKey = NULL)
 }
 \arguments{
-\item{apiKey}{apiKey for stat-xplore: you will need to create an account to generate a key.}
-
 \item{year_to_date}{Last month in quarter, one of: Mar, Jun, Sep, Dec}
+
+\item{apiKey}{apiKey for stat-xplore: you will need to create an account to generate a key.}
 }
 \value{
 Top 5 countries in terms of Nino Registrations.
