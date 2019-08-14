@@ -4,6 +4,7 @@
 #' @param start_date start date of data we want: month must be one of 3,6,9,12 so "2017-03-01" is valid "2017-01-01" is not
 #' @param end_date what date do we want data until
 #' @param frequency One of quarter, month, annual
+#' @param date_hashmap
 #' @param apiKey apiKey for stat-xplore: you will need to create an account to generate a key
 #' @param get_countries if TRUE will get all nationalities, used for top 5 table in publication.
 #' @param verbose if true, it will return information sent to the Stat-Xplore server.
@@ -13,7 +14,7 @@
 #' @export
 
 
-eu_non_eu_total <- function(start_date, end_date, frequency, get_countries=FALSE,verbose = FALSE, apiKey = NULL) {
+eu_non_eu_total <- function(start_date, end_date, frequency, get_countries=FALSE, verbose = FALSE, apiKey = NULL) {
 
     if (is.null(apiKey)) {
 
@@ -35,8 +36,12 @@ eu_non_eu_total <- function(start_date, end_date, frequency, get_countries=FALSE
     length_dates <- date_list[[2]]
 
 
-    # Generate JSON date sequence
-    num_quarters = seq(from=1, to=length_dates, by=1)
+
+    # Generate JSON date sequence, hashmap to look up quarters
+    from_date = date_hashmap[start_date][[1]]
+    to_date = date_hashmap[end_date][[1]]
+
+    num_quarters = seq(from=from_date, to=to_date, by=1)
     quarters <- lapply(num_quarters, function(x) paste('["str:value:NINO:f_NINO:QTR:c_QTR:',x,'"',']' ,sep=""))
     quarters_final <- paste(quarters, collapse=",")
     # generate world areas for api call
@@ -119,8 +124,6 @@ eu_non_eu_total <- function(start_date, end_date, frequency, get_countries=FALSE
       ),
       class = "eu_non_eu_data")
 
-      message("API call Successful!")
-
     return(x)
     ##
       },
@@ -152,6 +155,6 @@ generate_date_sequence <- function(start_date, end_date, frequency) {
 
 
 
-#data1 <- eu_non_eu_total("2002-03-01", "2018-12-01", "quarter")
+#data <- eu_non_eu_total("2017-03-01", "2018-12-01", "quarter")
 # Year to date for quarterly data
 # df_new <- zoo::rollapply(df, 4, sum, by.column=TRUE)

@@ -10,7 +10,7 @@ after_success:
 
 # builed failed without force install
 #install:
-#- R -e 'devtools::install_github("ukgovdatascience/govstyle", force=TRUE)'
+#    - R -e 'devtools::install_github("ukgovdatascience/govdown", force=TRUE)'
 
 os:
  - linux

@@ -1,4 +1,6 @@
 #' This function calculates the Year to date sum for Figure 1 in the report
+#' calculates rolling sum depending on the year to date.
+#' e.g. year_to_date = "Jun" calculates the cumulative sum Mar to June (2 obsevations as quarterly data).
 #' @param data raw data returned from the API call
 #' @param year_to_date Last month in quarter: March, June, September, December
 #' @return list containing data frame, dates and length of time series
@@ -7,9 +9,6 @@
 
 
 year_to_date_sum <- function(data, year_to_date) {
-  # get final date and this will define year to date
-  # calculation, if June then only sum two observations
-  # for each year.
 
   month2num <- list("Mar"= 1, "Jun" = 2, "Sep" = 3 , "Dec" = 4)
   roll_apply_param <- month2num[[year_to_date]]
